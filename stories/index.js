@@ -11,7 +11,7 @@ import DayList from "components/DayList";
 import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from "components/InterviewerList";
 
-import InterviewerList from "components/Appointment/index";
+import Appointment from "components/Appointment/index";
 
 storiesOf("Button", module)
   .addParameters({
