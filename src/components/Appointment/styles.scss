@@ -5,6 +5,8 @@
 $appointment-height: 11rem;
 
 .appointment {
+  background-color: $dark-background;
+  padding: 1em;
   &__add {
     min-height: $appointment-height;
     padding: 2rem 0;
@@ -42,18 +44,23 @@ $appointment-height: 11rem;
     flex-flow: row wrap;
     color: $white;
 
+    &-group {
+      display: flex;
+    }
+
     &-left {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      flex-grow: 2;
       min-width: 50%;
     }
 
     &-right {
       display: flex;
-      flex-direction: column;
       justify-content: flex-end;
       align-items: flex-end;
+      flex-grow: 1;
     }
 
     &--create {
@@ -136,8 +143,8 @@ $appointment-height: 11rem;
     color: $white;
     font-size: 1.5rem;
     height: 2rem;
-    margin-bottom: 0.25rem;
-    width: 100%;
+    margin-bottom: 3rem;
+    width: 50%;
 
     &:focus {
       outline: none;
