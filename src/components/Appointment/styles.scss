@@ -5,8 +5,6 @@
 $appointment-height: 11rem;
 
 .appointment {
-  background-color: $dark-background;
-  padding: 1em;
   &__add {
     min-height: $appointment-height;
     padding: 2rem 0;

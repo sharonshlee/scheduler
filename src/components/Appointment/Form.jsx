@@ -4,38 +4,32 @@ import Button from "components/Button";
 import "components/Appointment/styles.scss";
 
 export default function Form(props) {
-  const { interviewers, onSave, onCancel } = props;
+  const { name, interviewer, interviewers, onSave, onCancel } = props;
 
-  const [name, setName] = useState("");
-  const [interviewer, setInterviewer] = useState(null);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    props.onSubmit({ name: name, interviewer: interviewer });
-  };
+  const [name1, setName] = useState("");
+  const [interviewer1, setInterviewer] = useState(null);
 
   return (
-    <form className="appointment" onSubmit={handleSubmit}>
-      <card>
-        <input
-          className="appointment__create-input"
-          type="text"
-          name="studentName"
-          placeholder="Enter Student Name"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-        />
-      </card>
-      <div className="appointment__card-group">
-        <card>
-          <InterviewerList
-            interviewers={interviewers}
-            interviewer={interviewer}
-            setInterviewer={setInterviewer}
+    <main className="appointment__card appointment__card--create">
+      <section className="appointment__card-left">
+        <form autoComplete="off">
+          <input
+            className="appointment__create-input text--semi-bold"
+            name="name"
+            type="text"
+            placeholder="Enter Student Name"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
           />
-        </card>
-        <card className="appointment__card-right">
+        </form>
+        <InterviewerList
+          interviewers={interviewers}
+          interviewer={interviewer}
+          setInterviewer={setInterviewer}
+        />
+      </section>
+      <section className="appointment__card-right">
+        <section className="appointment__actions">
           <Button onClick={() => onCancel()} danger>
             Cancel
           </Button>
@@ -47,8 +41,8 @@ export default function Form(props) {
           >
             Save
           </Button>
-        </card>
-      </div>
-    </form>
+        </section>
+      </section>
+    </main>
   );
 }
