@@ -73,9 +73,7 @@ export default function Application(props) {
   const setDay = (day) => setState({ ...state, day });
 
   const setDays = (days) => {
-    //setState({ ...state, days });
-    //React Hook useEffect has a missing dependency: 'setDays'.
-    //Either include it or remove the dependency array
+    // remove dependency by updating the previous days data
     setState((prev) => ({ ...prev, days }));
   };
 
