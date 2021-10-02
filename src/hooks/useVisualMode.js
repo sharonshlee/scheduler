@@ -6,17 +6,12 @@ export default function useVisualMode(initial) {
 
   const transition = (newMode, replace = false) => {
     if (replace) {
-      //set the history to reflect that we are replacing the current mode.
-      setMode(newMode);
       history.pop();
-      setHistory([...history, newMode]);
-      console.log(">>", history);
-      console.log("inside if mode", mode);
-      console.log("inside if history", history);
-    } else {
-      setMode(newMode);
-      setHistory([...history, newMode]);
     }
+
+    //set the history to reflect that we are replacing the current mode.
+    setMode(newMode);
+    setHistory([...history, newMode]);
   };
 
   const back = () => {
