@@ -33,3 +33,19 @@ export function getInterview(state, interview) {
   //   }
   // }
 }
+
+export function getInterviewersForDay(state, day) {
+  const filteredDays = state.days.filter((item) => item.name === day);
+
+  //... returns an array of interviewers for that day
+  const filteredInterviewers = [];
+  for (const filteredDay of filteredDays) {
+    for (const interviewer of filteredDay.interviewers) {
+      if (state.interviewers[interviewer]) {
+        filteredInterviewers.push(state.interviewers[interviewer]);
+      }
+    }
+  }
+
+  return filteredInterviewers;
+}
