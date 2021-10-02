@@ -6,10 +6,10 @@ export default function useVisualMode(initial) {
 
   const transition = (newMode, replace = false) => {
     if (replace) {
+      //set the history to reflect that we are replacing the current mode.
       history.pop();
     }
 
-    //set the history to reflect that we are replacing the current mode.
     setMode(newMode);
     setHistory([...history, newMode]);
   };
