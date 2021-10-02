@@ -40,14 +40,14 @@ export default function Form(props) {
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <Button onClick={() => cancel()} danger>
+          <Button onClick={() => cancel()} danger="true">
             Cancel
           </Button>
           <Button
             onClick={() => {
               onSave(name, interviewer);
             }}
-            confirm
+            confirm="true"
           >
             Save
           </Button>
