@@ -4,13 +4,14 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment/index";
-import getAppointmentsForDay from "helpers/selectors";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 
 export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
     appointments: [],
+    interviewers: [],
   });
 
   const [dailyAppointments, setDailyAppointments] = useState([]);
@@ -21,11 +22,13 @@ export default function Application(props) {
     Promise.all([
       axios.get("http://localhost:8001/api/days"),
       axios.get("http://localhost:8001/api/appointments"),
+      axios.get("http://localhost:8001/api/interviewers"),
     ]).then((all) => {
       setState((prev) => ({
         ...prev,
         days: all[0].data,
-        appointments: Object.values(all[1].data),
+        appointments: all[1].data,
+        interviewers: all[2].data,
       }));
     });
   }, []);
@@ -34,15 +37,16 @@ export default function Application(props) {
     setDailyAppointments(getAppointmentsForDay(state, state.day));
   }, [state, setDailyAppointments]);
 
-  const parsedAppointments = dailyAppointments.map((item) => {
+  const schedule = dailyAppointments.map((appointment) => {
+    const interview = getInterview(state, appointment.interview);
+
     return (
-      // <Appointment
-      //   key={item.id}
-      //   id={item.id}
-      //   time={item.time}
-      //   interview={item.interview}
-      // />
-      <Appointment key={item.id} {...item} />
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        interview={interview}
+      />
     );
   });
 
@@ -65,7 +69,7 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {parsedAppointments}
+        {schedule}
         <Appointment key="last" time="5pm" />
       </section>
     </main>
