@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import InterviewerListItem from "components/InterviewerListItem";
 import "components/InterviewerList.scss";
 
@@ -23,3 +25,9 @@ export default function InterviewerList(props) {
     </section>
   );
 }
+
+// can use TypeScript or Flow for checking types
+// to check the correct values type to our components
+InterviewerList.propTypes = {
+  interviewers: PropTypes.array.isRequired,
+};
