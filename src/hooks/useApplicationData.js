@@ -1,7 +1,3 @@
-// The state object will maintain the same structure.
-// The setDay action can be used to set the current day.
-// The bookInterview action makes an HTTP request and updates the local state.
-// The cancelInterview action makes an HTTP request and updates the local state.
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -13,11 +9,24 @@ export default function useApplicationData() {
     interviewers: [],
   });
 
+  // The setDay action can be used to set the current day.
   const setDay = (day) => setState({ ...state, day });
 
-  function bookInterview(id, interview) {
-    console.log(id, interview);
+  const updateSpots = (latestState) => {
+    const { day, days, appointments } = latestState;
+    // find index so not to mix up the order of the days
+    const selectedDayIndex = days.findIndex((d) => d.name === day);
+    days[selectedDayIndex].spots = days[selectedDayIndex].appointments.filter(
+      (apptId) => appointments[apptId].interview === null
+    ).length; // total items with interview = null ===> total spots remaining
+    return {
+      ...latestState,
+      days, // update days with latest spot
+    };
+  };
 
+  // The bookInterview action makes an HTTP request and updates the local state.
+  function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview },
@@ -31,21 +40,23 @@ export default function useApplicationData() {
     // making our data persistent
     return axios.put(`/api/appointments/${id}`, appointment).then(() => {
       // setting the local state from the newly updated data from db
-      setState({ ...state, appointments });
+      setState(updateSpots({ ...state, appointments }));
     });
   }
 
+  // The cancelInterview action makes an HTTP request and updates the local state.
   function cancelInterview(id) {
-    console.log("before", state.appointments[id]);
     return axios.delete(`/api/appointments/${id}`).then(() => {
-      // set the interview object in state to null
-      setState((prev) => ({
-        ...prev,
-        appointments: {
-          ...prev.appointments,
-          [id]: { ...prev.appointments[id], interview: null },
-        },
-      }));
+      setState((prev) =>
+        updateSpots({
+          ...prev,
+          appointments: {
+            ...prev.appointments,
+            // set the interview object in local state to null to cancel the appointment
+            [id]: { ...prev.appointments[id], interview: null },
+          },
+        })
+      );
     });
   }
 
