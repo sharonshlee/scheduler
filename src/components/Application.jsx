@@ -60,9 +60,23 @@ export default function Application(props) {
     };
 
     // making our data persistent
-    return axios.put(`/api/appointments/${id}`, appointment).then((res) => {
+    return axios.put(`/api/appointments/${id}`, appointment).then(() => {
       // setting the local state from the newly updated data from db
       setState({ ...state, appointments });
+    });
+  }
+
+  function cancelInterview(id) {
+    console.log("before", state.appointments[id]);
+    return axios.delete(`/api/appointments/${id}`).then(() => {
+      // set the interview object to null
+      setState((prev) => ({
+        ...prev,
+        appointments: {
+          ...prev.appointments,
+          [id]: { ...prev.appointments[id], interview: null },
+        },
+      }));
     });
   }
 
@@ -77,6 +91,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={dailyInterviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
