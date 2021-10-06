@@ -52,6 +52,7 @@ $appointment-height: 11rem;
       justify-content: space-between;
       flex-grow: 2;
       min-width: 50%;
+      max-width: 50%;
     }
 
     &-right {
@@ -172,5 +173,13 @@ $appointment-height: 11rem;
   &__validation {
     color: $danger-color;
     margin-bottom: 1rem;
+    &__interviewer {
+      color: $danger-color;
+      padding-top: 2.5em;
+    }
+  }
+
+  &__interviewerlist {
+    display: flex;
   }
 }
