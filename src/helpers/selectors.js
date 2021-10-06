@@ -1,21 +1,16 @@
 export function getAppointmentsForDay(state, day) {
-  const filteredDays = state.days.filter((item) => item.name === day);
+  const filteredDay = state.days.find((item) => item.name === day);
 
-  //... returns an array of appointments for that day
-  const filteredAppointments = [];
-  for (const filteredDay of filteredDays) {
-    for (const appointment of filteredDay.appointments) {
-      if (state.appointments[appointment]) {
-        filteredAppointments.push(state.appointments[appointment]);
-      }
-    }
+  if (!filteredDay) {
+    return [];
   }
-
-  return filteredAppointments;
+  // returns an array of appointments for that day
+  return filteredDay.appointments.map((appId) => state.appointments[appId]);
 }
 
 export function getInterview(state, interview) {
-  //interview object = { student: "Sylvia Palmer", interviewer: 2 },
+  // sample input:
+  // interview object = { student: "Sylvia Palmer", interviewer: 2 },
 
   return interview
     ? {
@@ -23,7 +18,8 @@ export function getInterview(state, interview) {
         interviewer: state.interviewers[interview.interviewer],
       }
     : null;
-  //return a new interview object
+  // sample output:
+  // return a new interview object
   // {
   //   "student": "Lydia Miller-Jones",
   //   "interviewer": {
@@ -35,17 +31,11 @@ export function getInterview(state, interview) {
 }
 
 export function getInterviewersForDay(state, day) {
-  const filteredDays = state.days.filter((item) => item.name === day);
+  const filteredDay = state.days.find((item) => item.name === day);
 
-  //... returns an array of interviewers for that day
-  const filteredInterviewers = [];
-  for (const filteredDay of filteredDays) {
-    for (const interviewer of filteredDay.interviewers) {
-      if (state.interviewers[interviewer]) {
-        filteredInterviewers.push(state.interviewers[interviewer]);
-      }
-    }
+  if (!filteredDay) {
+    return [];
   }
-
-  return filteredInterviewers;
+  // returns an array of interviewers for that day
+  return filteredDay.interviewers.map((intId) => state.interviewers[intId]);
 }
