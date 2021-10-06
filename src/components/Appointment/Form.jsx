@@ -8,7 +8,7 @@ export default function Form(props) {
 
   const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-  const [error, setError] = useState("");
+  const [error, setError] = useState({});
 
   const reset = () => {
     setName("");
@@ -21,12 +21,17 @@ export default function Form(props) {
   };
 
   function validate() {
-    if (name === "") {
-      setError("Student name cannot be blank");
+    if (!name) {
+      setError({ name: "Student name cannot be blank" });
       return;
     }
 
-    setError("");
+    if (!interviewer) {
+      setError({ interviewer: "An interviewer must be selected" });
+      return;
+    }
+
+    setError({});
     onSave(name, interviewer);
   }
 
@@ -40,17 +45,27 @@ export default function Form(props) {
             type="text"
             placeholder="Enter Student Name"
             value={name}
-            onChange={(event) => setName(event.target.value)}
+            onChange={(event) => {
+              setName(event.target.value);
+              setError((prev) => ({ ...prev, name: "" }));
+            }}
           />
         </form>
 
-        <section className="appointment__validation">{error}</section>
-
-        <InterviewerList
-          interviewers={interviewers}
-          value={interviewer}
-          onChange={setInterviewer}
-        />
+        <section className="appointment__validation">{error.name}</section>
+        <div className="appointment__interviewerlist">
+          <InterviewerList
+            interviewers={interviewers}
+            value={interviewer}
+            onChange={(value) => {
+              setInterviewer((prev) => (prev === value ? "" : value));
+              setError((prev) => ({ ...prev, interviewer: "" }));
+            }}
+          />
+          <section className="appointment__validation__interviewer">
+            {error.interviewer}
+          </section>
+        </div>
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
