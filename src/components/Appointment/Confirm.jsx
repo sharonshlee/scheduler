@@ -10,7 +10,7 @@ export default function Confirm(props) {
         <Button onClick={() => onCancel()} danger="true">
           Cancel
         </Button>
-        <Button onClick={() => onConfirm()} danger="true">
+        <Button onClick={() => onConfirm()} danger="true" data-testid="Confirm">
           Confirm
         </Button>
       </section>
