@@ -16,6 +16,8 @@ It combine a concise API with a WebSocket server to build a realtime experience.
 
 !["Screenshot of Deleting status"](https://github.com/sharonshlee/scheduler/blob/master/docs/deleting.png)
 
+!["Screenshot of Mobile View"](https://github.com/sharonshlee/scheduler/blob/master/docs/mobile-view.png)
+
 ## Setup
 
 Install dependencies with `npm install`.
