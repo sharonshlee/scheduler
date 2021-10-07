@@ -9,25 +9,13 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterview(state, interview) {
-  // sample input:
-  // interview object = { student: "Sylvia Palmer", interviewer: 2 },
-
+  // return a new interview object with interview details
   return interview
     ? {
         student: interview.student,
         interviewer: state.interviewers[interview.interviewer],
       }
     : null;
-  // sample output:
-  // return a new interview object
-  // {
-  //   "student": "Lydia Miller-Jones",
-  //   "interviewer": {
-  //     "id": 1,
-  //     "name": "Sylvia Palmer",
-  //     "avatar": "https://i.imgur.com/LpaY82x.png"
-  //   }
-  // }
 }
 
 export function getInterviewersForDay(state, day) {

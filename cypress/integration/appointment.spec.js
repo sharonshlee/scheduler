@@ -26,7 +26,7 @@ describe("Appointments", () => {
   });
 
   // cancel an interview
-  it.only("should cancel an interview", () => {
+  it("should cancel an interview", () => {
     cy.get("[data-testid=Delete]").click({ force: true });
     cy.get("[data-testid=Confirm]").click();
     cy.contains("Deleting").should("exist");
